@@ -2,6 +2,10 @@
     <div class="screen">
         <h1>POKE MEMORIES</h1>
         <h3>Select mode to start game</h3>
+        <button @click="onStarts(4)">
+            <span>2x2</span>
+            <span>Easy</span>
+        </button>
         <button @click="onStarts(16)">
             <span>4x4</span>
             <span>Easy</span>

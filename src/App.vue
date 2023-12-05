@@ -2,15 +2,18 @@
   <main-screen v-if="statusMatch === 'default'" @onStart="onHandleBeforeStart($event)"></main-screen>
   <interact-screen 
       v-if="statusMatch === 'match'" 
-      :cardsContext="settings.cardsContext">
+      :cardsContext="settings.cardsContext"
+      @onFinish="onGetResult">
   </interact-screen>
+  <result-screen v-if="statusMatch === 'result'" :timer="timer" @onStartAgain="statusMatch = 'default'"></result-screen>
   <!-- <copy-right-screen/> -->
 </template>
 
 <script>
 import MainScreen from "./components/MainScreen.vue"
 import InteractScreen from "./components/InteractScreen.vue"
-// import CopyRightScreen from "./components/CopyRightScreen.vue"
+import CopyRightScreen from "./components/CopyRightScreen.vue"
+import ResultScreen from "./components/ResultScreen.vue"
 
 import {shuffled} from './utils/array'
 export default {
@@ -24,12 +27,14 @@ export default {
         startedAt: null,
       },
       statusMatch: "default",
+      timer: 0,
     }
   },
   components: {
     MainScreen,
     InteractScreen,
     // CopyRightScreen,
+    ResultScreen,
   },
   methods: {
     onHandleBeforeStart(config) {
@@ -48,6 +53,11 @@ export default {
       this.settings.startedAt = new Date().getTime();
       //data ready
       this.statusMatch = "match";
+    },
+    onGetResult() {
+      this.timer = new Date().getTime() - this.settings.startedAt;
+
+      this.statusMatch = "result";
     }
   }
 };

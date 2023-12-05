@@ -1,16 +1,19 @@
 <template>
-    <h1>
-        Interact Component here ...
-    </h1>
-    <card-flip 
-        v-for="(card, index) in cardsContext" 
-        :key="index" 
-        :ref="`card-${index}`"
-        :imgBackFaceUrl="`images/${card}.png`"
-        :card="{ index: index, value: card }"
-        @onFliped="checkRule($event)"
-    />
-    <h1>{{ count }}</h1>
+    <div class="screen">
+        <h1>
+            Interact Component here ...
+        </h1>
+        <card-flip 
+            v-for="(card, index) in cardsContext" 
+            :key="index" 
+            :ref="`card-${index}`"
+            :imgBackFaceUrl="`images/${card}.png`"
+            :card="{ index: index, value: card }"
+            :rules="rules"
+            @onFliped="checkRule($event)"
+            />
+        <h1>{{ count }}</h1>
+    </div>
 </template>
 
 <script>
@@ -38,15 +41,23 @@ export default {
         checkRule(card) {
             if(this.rules.length == 2) return false;
             this.rules.push(card);
+            let i = 0;
+            for(i ; i<this.rules.length;i++) {
+                this.$refs[`card-${this.rules[i].index}`][0].onDisabledFlip();
+            }
+
             if(this.rules.length == 2 && this.rules[0].value == this.rules[1].value) {
                 console.log('right . . .');
                 this.$refs[`card-${this.rules[0].index}`][0].onDisabledFlip();
                 this.$refs[`card-${this.rules[1].index}`][0].onDisabledFlip();
 
-                this.rules.pop()
-                this.rules.pop()
-                console.log(this.rules);
+                this.rules = [];
                 this.count++;
+                if(this.count == this.cardsContext.length / 2) {
+                    setTimeout(()=>{
+                        this.$emit("onFinish");
+                    }, 920);
+                }
             }
             if(this.rules.length == 2 && this.rules[0].value != this.rules[1].value) {
                 console.log('wrong . . .');
@@ -55,12 +66,10 @@ export default {
                     this.$refs[`card-${this.rules[0].index}`][0].onFlipBackCard();
                     this.$refs[`card-${this.rules[1].index}`][0].onFlipBackCard();
 
-                    this.rules.pop()
-                    this.rules.pop()
+                    this.rules = [];
                 }, 800)
-                
-
-                this.count++;
+                this.$refs[`card-${this.rules[0].index}`][0].onEnabledFlip();
+                this.$refs[`card-${this.rules[1].index}`][0].onEnabledFlip();
             } else return false;
         }
     },
