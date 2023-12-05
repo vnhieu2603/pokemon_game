@@ -1,27 +1,29 @@
 <template>
     <div class="screen">
         <h1>POKE MEMORIES</h1>
-        <h3>Select mode to start game</h3>
-        <button @click="onStarts(4)">
-            <span>2x2</span>
-            <span>Easy</span>
-        </button>
-        <button @click="onStarts(16)">
-            <span>4x4</span>
-            <span>Easy</span>
-        </button>
-        <button @click="onStarts(36)">
-            <span>6x6</span>
-            <span>Normal</span>
-        </button>
-        <button @click="onStarts(64)">
-            <span>8x8</span>
-            <span>Hard</span>
-        </button>
-        <button @click="onStarts(100)">
-            <span>10x10</span>
-            <span>Super Hard</span>
-        </button>
+        <p>Select mode to start game</p>
+        <div class="modes">
+            <button @click="onStarts(4)">
+                <span>2x2</span>
+                <span>Easy</span>
+            </button>
+            <button @click="onStarts(16)">
+                <span>4x4</span>
+                <span>Easy</span>
+            </button>
+            <button @click="onStarts(36)">
+                <span>6x6</span>
+                <span>Normal</span>
+            </button>
+            <button @click="onStarts(64)">
+                <span>8x8</span>
+                <span>Hard</span>
+            </button>
+            <button @click="onStarts(100)">
+                <span>10x10</span>
+                <span>Super Hard</span>
+            </button>
+        </div>
     </div>
 </template>
 
@@ -34,3 +36,62 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+.screen {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.screen h1 {
+  font-size: 4.5rem;
+  text-transform: uppercase;
+}
+
+.screen p {
+  font-size: 2rem;
+}
+.modes {
+  display: flex;
+  margin-top: 2rem;
+}
+
+.modes button {
+  font: var(--font);
+  width: 150px;
+  height: 150px;
+  background: transparent;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  border-radius: 1rem;
+  margin: 0 1rem;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+}
+
+.modes button:hover {
+  background-color: gray;
+  color: var(--dark);
+}
+
+.modes button span:first-child {
+  font-size: 2rem;
+}
+
+.modes button span:last-child {
+  display: block;
+  font-size: 1.25rem;
+  margin-top: 0.5rem;
+}
+</style>

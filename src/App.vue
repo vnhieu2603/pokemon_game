@@ -6,7 +6,7 @@
       @onFinish="onGetResult">
   </interact-screen>
   <result-screen v-if="statusMatch === 'result'" :timer="timer" @onStartAgain="statusMatch = 'default'"></result-screen>
-  <!-- <copy-right-screen/> -->
+  <copy-right-screen/>
 </template>
 
 <script>
@@ -33,13 +33,11 @@ export default {
   components: {
     MainScreen,
     InteractScreen,
-    // CopyRightScreen,
+    CopyRightScreen,
     ResultScreen,
   },
   methods: {
     onHandleBeforeStart(config) {
-      console.log("running handle before start, ", config);
-      console.log("config: " + config);
       this.settings.totalOfBlocks = config.totalOfBlocks;
 
       const firstCards = Array.from(

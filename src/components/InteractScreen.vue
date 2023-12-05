@@ -1,18 +1,16 @@
 <template>
     <div class="screen">
-        <h1>
-            Interact Component here ...
-        </h1>
-        <card-flip 
-            v-for="(card, index) in cardsContext" 
-            :key="index" 
-            :ref="`card-${index}`"
-            :imgBackFaceUrl="`images/${card}.png`"
-            :card="{ index: index, value: card }"
-            :rules="rules"
-            @onFliped="checkRule($event)"
+        <div class="flex-container" :style="{ 'max-width':maxWidth + 'px'}">
+            <card-flip 
+                v-for="(card, index) in cardsContext" 
+                :key="index" 
+                :ref="`card-${index}`"
+                :imgBackFaceUrl="`images/${card}.png`"
+                :card="{ index: index, value: card }"
+                :rules="rules"
+                @onFliped="checkRule($event)"
             />
-        <h1>{{ count }}</h1>
+        </div>
     </div>
 </template>
 
@@ -35,6 +33,7 @@ export default {
         return {
             rules: [],
             count: 0,
+            maxWidth: Math.sqrt(this.cardsContext.length) * 100 + 150
         }
     },
     methods: {
@@ -61,7 +60,6 @@ export default {
             }
             if(this.rules.length == 2 && this.rules[0].value != this.rules[1].value) {
                 console.log('wrong . . .');
-                console.log(this.$refs[`card-${this.rules[0].index}`])
                 setTimeout(() => {
                     this.$refs[`card-${this.rules[0].index}`][0].onFlipBackCard();
                     this.$refs[`card-${this.rules[1].index}`][0].onFlipBackCard();
@@ -75,3 +73,20 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+.screen {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+
+}
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 2%;
+}
+</style>
