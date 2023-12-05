@@ -46,8 +46,22 @@ export default {
             }
         },
 
+        flipFrontEnabledCard() {
+            if(this.isDisabled) return;
+            this.onFlipFrontCard();
+        },
+
+        flipBackEnabledCard() {
+            if(this.isDisabled) return;
+            this.onFlipBackCard();
+        },
+
         onFlipBackCard() {
             this.isFlipped = false;
+        },
+
+        onFlipFrontCard() {
+            this.isFlipped = true;
         },
 
         onDisabledFlip() {

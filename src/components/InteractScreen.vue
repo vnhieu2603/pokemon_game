@@ -1,5 +1,6 @@
 <template>
     <div class="screen">
+        <button @click="turnAll">View all</button>
         <div class="flex-container" :style="{ 'max-width':maxWidth + 'px'}">
             <card-flip 
                 v-for="(card, index) in cardsContext" 
@@ -33,7 +34,8 @@ export default {
         return {
             rules: [],
             count: 0,
-            maxWidth: Math.sqrt(this.cardsContext.length) * 100 + 150
+            maxWidth: Math.sqrt(this.cardsContext.length) * 100 + 150,
+            countSuggest: 0,
         }
     },
     methods: {
@@ -69,6 +71,25 @@ export default {
                 this.$refs[`card-${this.rules[0].index}`][0].onEnabledFlip();
                 this.$refs[`card-${this.rules[1].index}`][0].onEnabledFlip();
             } else return false;
+        },
+
+        turnAll() {
+            if(this.countSuggest>1) {
+                return alert("Nạp VIP để dùng nhiều trợ giúp hơn")
+            }
+            let i = 0;
+            for(i ; i<this.cardsContext.length;i++) {
+                console.log(this.$refs[`card-${i}`]);
+                this.$refs[`card-${i}`][0].flipFrontEnabledCard();
+            }
+            let j = 0;
+            setTimeout(()=>{
+
+                for(j ; j<this.cardsContext.length;j++) {
+                    this.$refs[`card-${j}`][0].flipBackEnabledCard() 
+                }
+            },4000);
+            this.countSuggest++;
         }
     },
 }
@@ -81,12 +102,27 @@ export default {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-
+    flex-direction: column;
 }
 .flex-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     padding: 2%;
+}
+.screen button {
+  font: var(--font);
+  background: transparent;
+  box-shadow: none;
+  margin: 1rem;
+  padding: 1rem 1.25rem;
+  border-radius: 0.5rem;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.screen button:hover {
+  background-color: gray;
+  color: var(--dark);
 }
 </style>

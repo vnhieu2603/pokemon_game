@@ -5,7 +5,7 @@
         <div class="modes">
             <button @click="onStarts(4)">
                 <span>2x2</span>
-                <span>Easy</span>
+                <span>Super Easy</span>
             </button>
             <button @click="onStarts(16)">
                 <span>4x4</span>
